@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Puutarhasuunnitelmat</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="../css/bootstrap.css" rel="stylesheet">
+        <link href="../css/bootstrap-theme.css" rel="stylesheet">
+        <link href="../css/main.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href=".">Puutarhasuunnitelmat</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Suunnitelmat</a></li>
+                            <li><a href="#">Kasvit</a></li>
+
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="login.html">Kirjaudu sisään</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Kirjaudu ulos</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            <ul class="nav nav-tabs" >
+                <li class="active"><a href="#">Hae suunnitelma</a></li>
+                <li><a href="#">Selaile suunnitelmia</a></li>
+            </ul>
+            <br>
+            <div class="container">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal" >
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="col-md-3 control-label">Tila:</label>
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option1"> Parveke
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option2"> Piha
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="col-md-3 control-label">Tilan koko:</label>
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option3"> Iso
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option4"> Pieni
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="col-md-3 control-label">Valoisuus:</label>
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option5"> Aurinko
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option6"> Puolivarjo
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option6"> Varjo
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label class="col-md-3 control-label">Kasvuvyöhyke:</label>
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option7"> I a
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option7"> I b
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> II
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> III
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> IV
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> V
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> VI
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> VII
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> VIII
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <div class="btn-toolbar" id="testi" data-toggle="buttons">
+                                       
+                                       <label class="col-md-3 control-label">Tunnelma:</label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option7"> Romanttinen
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option7"> Japanilainen
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> Luonnollinen
+                                        </label>
+                                      
+                                       <label class="col-md-3"></label>
+                                         
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> Graafinen
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> Kivikkoinen
+                                        </label>
+                                        <label class="btn btn-primary">
+                                            <input type="radio" name="options" id="option8"> Hyötypuutarha
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="../js/bootstrap.js"></script>
+    </body>
+</html>
