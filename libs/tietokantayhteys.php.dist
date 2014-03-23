@@ -2,8 +2,8 @@
 
 function getTietokantayhteys() {
     static $yhteys = null; //Muuttuja, jonka sisältö säilyy getTietokantayhteys-kutsujen välillä.
-    $tunnus = "tarhuri";
-    $salasana = "tarhaaja";
+    $tunnus = "";
+    $salasana = "";
 
     if ($yhteys === null) {
         //Tämä koodi suoritetaan vain kerran, sillä seuraavilla 
@@ -18,11 +18,3 @@ function getTietokantayhteys() {
     return $yhteys;
 }
 
-$sql = "select 1+1 as two";
-$kysely = getTietokantayhteys()->prepare($sql);
-
-
-if ($kysely->execute()) {
-  $kakkonen = $kysely->fetchColumn();
-  var_dump($kakkonen);
-}

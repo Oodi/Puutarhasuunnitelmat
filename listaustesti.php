@@ -1,6 +1,6 @@
 <?php
 
-require "libs/models/kayttaja.php";
+require_once "libs/models/kayttaja.php";
 
 //Lista asioista array-tietotyyppiin laitettuna:
 $lista = Kayttaja::etsiKaikkiKayttajat();
