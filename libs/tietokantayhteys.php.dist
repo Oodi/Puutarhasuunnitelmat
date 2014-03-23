@@ -1,0 +1,28 @@
+<?php
+
+function getTietokantayhteys() {
+    static $yhteys = null; //Muuttuja, jonka sisältö säilyy getTietokantayhteys-kutsujen välillä.
+    $tunnus = "tarhuri";
+    $salasana = "tarhaaja";
+
+    if ($yhteys === null) {
+        //Tämä koodi suoritetaan vain kerran, sillä seuraavilla 
+        //funktion suorituskerroilla $yhteys-muuttujassa on sisältöä.
+        $yhteys = new PDO('mysql:unix_socket=/home/siau/mysql/socket;dbname=Puutarhasuunnitelmat', $tunnus, $salasana);
+        
+        $yhteys->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+    
+    
+
+    return $yhteys;
+}
+
+$sql = "select 1+1 as two";
+$kysely = getTietokantayhteys()->prepare($sql);
+
+
+if ($kysely->execute()) {
+  $kakkonen = $kysely->fetchColumn();
+  var_dump($kakkonen);
+}

@@ -6,6 +6,31 @@
         <link href="../css/bootstrap.css" rel="stylesheet">
         <link href="../css/bootstrap-theme.css" rel="stylesheet">
         <link href="../css/main.css" rel="stylesheet">
+
+        <style type="text/css">
+            .container-fluid > .content{
+                margin-left:280px;
+            }
+            .categories li{
+
+            }
+            .categories li:focus{
+
+            }
+            #main-items tbody tr td{
+                cursor:pointer !important;
+            }
+            .highlight td{
+                font-weight:bold;
+            }
+            td.mini-thumbnail img{
+                max-height:50px;
+                max-width:100px;
+            }
+            td.mini-thumbnail{
+                text-align:center;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -171,8 +196,44 @@
                 <div class="tab-pane fade" id="selaus">
 
 
-                    <p>sad</p>
-
+                    <div class="container-fluid">
+                        <div class="col-md-3 sidebar">
+                            <div class="well span4">
+                                <h2>Selaa</h2>
+                                <div class='cleaner_h20'></div>
+                                <input type='text' placeholder="Hae" class='span4' value=''/>
+                                <div class='cleaner_h10'></div>
+                     
+                                <div class='cleaner_h20'></div>
+                                <button class='btn'>Reset</button>
+                                <button class='btn primary'>Update</button>
+                            </div>
+                        </div>
+                        <div class="content">
+            
+                            <div class='cleaner'></div>
+                            <table class='zebra-striped' id='main-items'>
+                                <thead>
+                                    <tr>
+                                        <th class='span2'></th>
+                                        <th class='span4'>Nimi</th>
+                                        <th class='span2'></th>
+                                        <th class='span2'></th>
+                                        <th class='span2'></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class='mini-thumbnail'><img src=''/></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>                         
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
