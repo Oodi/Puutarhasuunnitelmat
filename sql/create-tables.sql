@@ -4,6 +4,7 @@ nimimerkki varchar(20) NOT NULL,
 salasana varchar(255) NOT NULL,
 sposti varchar(100),
 admin int(5) NOT NULL DEFAULT 0,
+salt varchar(255),
 PRIMARY key (nimimerkki)
 );
 

@@ -1,6 +1,7 @@
 <?php
 
 require_once "libs/models/kayttaja.php";
+require_once 'libs/tietokantayhteys.php';
 
 //Lista asioista array-tietotyyppiin laitettuna:
 $lista = Kayttaja::etsiKaikkiKayttajat();
@@ -31,7 +32,7 @@ $lista = Kayttaja::etsiKaikkiKayttajat();
                     <tr>
                         <td></td>
                         <td><?php echo $asia->getNimimerkki(); ?></td>
-                        <td> </td>
+                        <td><?php echo $asia->getSposti(); ?> </td>
                     </tr>
                 <?php } ?>
 
