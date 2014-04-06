@@ -27,7 +27,7 @@ PRIMARY key (kategoriaID)
 CREATE TABLE Kasvi
 (
 kasviID int NOT NULL AUTO_INCREMENT,
-nimi varchar(70) NOT NULL,
+nimi varchar(70) NOT NULL unique,
 kuvaus TEXT,
 valoisuus int,
 kasvuvyohyke int,

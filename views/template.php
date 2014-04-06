@@ -18,6 +18,17 @@
                     <strong>Virhe!</strong> <?php echo $data->virhe; ?>
                 </div>
             <?php endif; ?>
+            <?php if (!empty($_SESSION['ilmoitus'])): ?>
+                <div class="alert alert-danger alert-error">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <?php echo $_SESSION['ilmoitus']; ?>
+                </div>
+                <?php
+                // Samalla kun viesti näytetään, se poistetaan istunnosta,
+                // ettei se näkyisi myöhemmin jollain toisella sivulla uudestaan.
+                unset($_SESSION['ilmoitus']);
+            endif;
+            ?>
             <?php
             require 'views/' . $sivu . '.php';
             ?>
@@ -25,5 +36,15 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="js/bootstrap.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#top").tooltip({
+                    placement : 'top'   
+                });
+               
+            });
+        </script>
+        
+
     </body>
 </html>
