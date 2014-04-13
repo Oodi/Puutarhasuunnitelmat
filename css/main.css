@@ -49,8 +49,11 @@ body {
   border-top-right-radius: 0;
 }
 
-#testi .btn{
-    
+#testi .btn{ 
     margin-bottom: 8px;
+}
+
+.form-signin .btn {
+   margin-bottom: 8px;
 }
 

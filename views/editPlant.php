@@ -28,7 +28,6 @@
             </div>
 
             <div class="form-group">
-
                 <label class="col-sm-2 form-label">Valoisuus:</label>
                 <div class="btn-group" data-toggle="buttons">
 
@@ -38,7 +37,7 @@
                         echo " active";
                     }
                     ?>">
-                        <input type="checkbox" name="valoisuus[]" value="1"  id="option"
+                        <input type="checkbox" name="valoisuus[]" value="1"
                         <?php
                         if (isset($data->valoisuus) && ($data->valoisuus <= 2)) {
                             echo " checked";
@@ -52,7 +51,7 @@
                         echo " active";
                     }
                     ?>">
-                        <input type="checkbox" name="valoisuus[]" value="2"  id="option"
+                        <input type="checkbox" name="valoisuus[]" value="2"
                         <?php
                         if (isset($data->valoisuus) && ($data->valoisuus <= 4 && $data->valoisuus != 1)) {
                             echo " checked";
@@ -66,7 +65,7 @@
                         echo " active";
                     }
                     ?>">
-                        <input type="checkbox" name="valoisuus[]" value="3" id="option"
+                        <input type="checkbox" name="valoisuus[]" value="3"
                         <?php
                         if (isset($data->valoisuus) && ($data->valoisuus >= 4 || $data->valoisuus == 0)) {
                             echo " checked";
@@ -87,7 +86,7 @@
                         echo " active";
                     }
                     ?>">
-                        <input type="radio" name="vyohyke" value="1" id="option7" 
+                        <input type="radio" name="vyohyke" value="1"
                         <?php
                         if (isset($data->vyohyke) && ($data->vyohyke == 1)) {
                             echo " checked";

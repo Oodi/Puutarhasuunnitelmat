@@ -18,6 +18,7 @@
         ?>
                required>                   
         <button class="btn btn-lg btn-primary btn-block" type="submit">Kirjaudu</button>
+        <a class="btn btn-sm btn-success" href="register.php" role="button">Uusi käyttäjä?</a>
     </form>
-
+    
 </div>

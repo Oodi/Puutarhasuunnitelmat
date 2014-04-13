@@ -17,7 +17,6 @@ $salasana = $_POST["password"];
 
 $kayttaja = Kayttaja::etsiKayttajaTunnuksilla($nimimerkki, $salasana);
 if ($kayttaja != null) {
-    //Tallennetaan istuntoon käyttäjäolio
     $nimi = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $kayttaja->getNimimerkki());
     $ryhma = $kayttaja->getAdmin();
     $_SESSION['kirjautunut'] = $nimi;

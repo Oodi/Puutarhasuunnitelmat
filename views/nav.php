@@ -14,7 +14,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Suunnitelmat</a></li>
+                <li><a href="searchPlan.php">Suunnitelmat</a></li>
                 <li><a href="plantlist.php">Kasvit</a></li>
             </ul>
 
@@ -31,7 +31,7 @@
                         <li class="divider"></li>
                         <?php if (tarkastaOikeudet() >= 1): ?>   
                         <li><a href="#">Hyväksy suunnitelmia</a></li>
-                        <li><a href="#">Käyttäjät</a></li>
+                        <li><a href="userlist.php">Käyttäjät</a></li>
                         <li><a href="newPlant.php">Lisää kasvi</a></li>                      
                         <li class="divider"></li>
                         <?php endif; ?>

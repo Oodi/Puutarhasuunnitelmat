@@ -26,10 +26,10 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-md-6">
-                        Panel content
+                        <a class="btn btn-default" href="register.php" role="button">Rekisteröidy käyttäjäksi &raquo;</a>
                     </div>
                     <div class="col-md-6">
-                        Panel content
+                        
                     </div>
                 </div>
             </div>

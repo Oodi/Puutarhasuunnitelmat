@@ -15,11 +15,10 @@ if (empty($_POST["nimi"])) {
 
 
 
-$nimi = $_POST["nimi"];
-$kuvaus = $_POST["kuvaus"];
+$nimi = siistiString($_POST["nimi"]);
+$kuvaus = siistiString($_POST["kuvaus"]);
 $valo = array();
-if (isset($_POST["valoisuus"])) {
-    
+if (isset($_POST["valoisuus"])) {   
     foreach ($_POST["valoisuus"] as $arvo) {
         $valo[] = $arvo;
     }

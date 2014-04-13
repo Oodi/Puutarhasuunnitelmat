@@ -10,8 +10,8 @@ if (tarkastaOikeudet() < 1) {
 
 if (isset($_POST["id"])) {
     $id = $_POST["id"];
-    $nimi = $_POST["nimi"];
-    $kuvaus = $_POST["kuvaus"];
+    $nimi = siistiString($_POST["nimi"]);
+    $kuvaus = siistiString($_POST["kuvaus"]);
     $valo = array();
     if (isset($_POST["valoisuus"])) {
 

@@ -14,6 +14,12 @@ function naytaNakyma($sivu, $data = array()) {
     exit();
 }
 
+function naytaNakymaNoExit($sivu, $data = array()) {
+    $sivu = $sivu;
+    $data = (object) $data;
+    require 'views/template.php';
+}
+
 function ohjaaSivulle($sivu) {
     Header('Location:' . $sivu . '.php');
 }
@@ -44,5 +50,9 @@ function tarkastaOikeudet() {
     }
 }
 
+
+function siistiString($s) {
+    return htmlspecialchars(trim($s));
+}
 
 

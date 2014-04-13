@@ -1,7 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-body">
         <form class="form-horizontal" method="POST">
-
             <div class="form-group">
                 <label class="col-sm-2 form-label" for="textinput">Kasvin nimi:</label>
                 <div class="col-sm-3">
@@ -12,7 +11,7 @@
             <div class="form-group">
                 <label class="col-sm-2 form-label" for="textinput">Kuvaus:</label>
                 <div class="col-sm-3">
-                    <textarea id="kuvaus" name="kuvaus" rows="3"></textarea>
+                    <textarea id="kuvaus" name="kuvaus" rows="3" cols="40"></textarea>
                 </div>
             </div>
 
@@ -21,13 +20,13 @@
                 <label class="col-sm-2 form-label">Valoisuus:</label>
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-primary">
-                        <input type="checkbox" name="valoisuus[]" value="1"  id="option"> Aurinko
+                        <input type="checkbox" name="valoisuus[]" value="1"> Aurinko
                     </label>
                     <label class="btn btn-primary">
-                        <input type="checkbox" name="valoisuus[]" value="2"  id="option"> Puolivarjo
+                        <input type="checkbox" name="valoisuus[]" value="2"> Puolivarjo
                     </label>
                     <label class="btn btn-primary">
-                        <input type="checkbox" name="valoisuus[]" value="3" id="option"> Varjo
+                        <input type="checkbox" name="valoisuus[]" value="3"> Varjo
                     </label>
                 </div>
 
@@ -71,8 +70,6 @@
 
                 <label class="col-sm-2 form-label">Tunnelma:</label>
                 <div class="btn-toolbar" id="testi" data-toggle="buttons">
-
-
                     <label class="btn btn-primary">
                         <input type="checkbox" name="tunnelma[]" value="romanttinen" id="option7"> Romanttinen
                     </label>
@@ -82,7 +79,6 @@
                     <label class="btn btn-primary">
                         <input type="checkbox" name="tunnelma[]" value="luonnollinen" id="option8"> Luonnollinen
                     </label>
-
                     <label class="btn btn-primary">
                         <input type="checkbox" name="tunnelma[]" value="graafinen" id="option8"> Graafinen
                     </label>
@@ -90,7 +86,7 @@
                         <input type="checkbox" name="tunnelma[]" value="kivikkoinen" id="option8"> Kivikkoinen
                     </label>
                     <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="tunnelma" id="option8"> Hyötypuutarha
+                        <input type="checkbox" name="tunnelma[]" value="hyoty" id="option8"> Hyötypuutarha
                     </label>
                 </div>
 

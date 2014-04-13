@@ -26,39 +26,17 @@ class Kasvi {
         //  $this->kategoria = $kategoria;
     }
 
-    public function getID() {
-        return $this->kasviID;
-    }
 
-    public function getNimi() {
-        return $this->nimi;
-    }
-
-    public function getKuvaus() {
-        return $this->kuvaus;
-    }
-
-    public function getValoisuus() {
-        return $this->valoisuus;
-    }
-
-    public function getKasvukorkeus() {
-        return $this->kasvukorkeus;
-    }
-
-    public function setKasviID($id) {
-        $this->kasviID = $id;
-    }
 
     public static function haeKasvit($sivua) {
         $montako = 10;
-        $testi = 0;
+        $testi = ($sivua - 1) * $montako;
         $sql = "SELECT * FROM Kasvi ORDER by nimi LIMIT :monta OFFSET :apu ";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->bindParam(':monta', $montako, PDO::PARAM_INT);
         $kysely->bindParam(':apu', $testi, PDO::PARAM_INT);
         $kysely->execute();
-        // $kysely->execute(array($montako, ($sivua - 1) * $montako));
+
 
         $tulokset = array();
         foreach ($kysely->fetchAll(PDO::FETCH_OBJ) as $tulos) {
@@ -179,6 +157,30 @@ class Kasvi {
         } elseif ($c) {
             return 5;
         }
+    }
+    
+        public function getID() {
+        return $this->kasviID;
+    }
+
+    public function getNimi() {
+        return $this->nimi;
+    }
+
+    public function getKuvaus() {
+        return $this->kuvaus;
+    }
+
+    public function getValoisuus() {
+        return $this->valoisuus;
+    }
+
+    public function getKasvukorkeus() {
+        return $this->kasvukorkeus;
+    }
+
+    public function setKasviID($id) {
+        $this->kasviID = $id;
     }
 
 }

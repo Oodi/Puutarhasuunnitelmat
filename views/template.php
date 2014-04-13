@@ -19,7 +19,7 @@
                 </div>
             <?php endif; ?>
             <?php if (!empty($_SESSION['ilmoitus'])): ?>
-                <div class="alert alert-danger alert-error">
+                <div class="alert alert-success">
                     <a href="#" class="close" data-dismiss="alert">&times;</a>
                     <?php echo $_SESSION['ilmoitus']; ?>
                 </div>
@@ -36,15 +36,12 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="js/bootstrap.js"></script>
-        <script>
-            $(document).ready(function(){
-                $("#top").tooltip({
-                    placement : 'top'   
-                });
-               
+        <script type="text/javascript">
+            $(function() {
+                $('button').tooltip({placement: 'top'});
             });
         </script>
-        
+
 
     </body>
 </html>
