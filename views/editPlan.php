@@ -3,7 +3,7 @@
         <form class="form-horizontal" method="POST">
 
             <div class="form-group">
-                <label class="col-sm-2 form-label" for="textinput">Kasvin nimi:</label>
+                <label class="col-sm-2 form-label" for="textinput">Suunnitelman nimi:</label>
                 <div class="col-sm-3">
                     <input id="textinput" name="nimi" placeholder="" class="form-control" type="text" 
                     <?php
@@ -26,6 +26,70 @@
             </div>
 
             <div class="form-group">
+                <label class="col-sm-2 form-label">Tila:</label>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary
+                    <?php
+                    if (isset($data->tila) && ($data->tila == 1)) {
+                        echo " active";
+                    }
+                    ?>">
+                        <input type="radio" name="tila" value="1"
+                        <?php
+                        if (isset($data->tila) && ($data->tila == 1)) {
+                            echo " checked";
+                        }
+                        ?>> Parveke
+                    </label>
+                    <label class="btn btn-primary
+                    <?php
+                    if (isset($data->tila) && ($data->tila == 2)) {
+                        echo " active";
+                    }
+                    ?>">
+                        <input type="radio" name="tila" value="2"
+                        <?php
+                        if (isset($data->tila) && ($data->tila == 2)) {
+                            echo " checked";
+                        }
+                        ?>> Piha
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 form-label">Tilan koko:</label>
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary
+                    <?php
+                    if (isset($data->tKoko) && ($data->tKoko == 3)) {
+                        echo " active";
+                    }
+                    ?>">
+                        <input type="radio" name="tKoko" value="3"
+                        <?php
+                        if (isset($data->tKoko) && ($data->tKoko == 3)) {
+                            echo " checked";
+                        }
+                        ?>> Iso
+                    </label>
+                    <label class="btn btn-primary
+                    <?php
+                    if (isset($data->tKoko) && ($data->tKoko == 1)) {
+                        echo " active";
+                    }
+                    ?>">
+                        <input type="radio" name="tKoko" value="1"
+                        <?php
+                        if (isset($data->tKoko) && ($data->tKoko == 1)) {
+                            echo " checked";
+                        }
+                        ?>> Pieni
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-sm-2 form-label">Valoisuus:</label>
                 <div class="btn-group" data-toggle="buttons">
 
@@ -35,7 +99,7 @@
                         echo " active";
                     }
                     ?>">
-                        <input type="checkbox" name="valoisuus[]" value="1"
+                        <input type="radio" name="valoisuus" value="1"
                         <?php
                         if (isset($data->valoisuus) && ($data->valoisuus <= 2)) {
                             echo " checked";
@@ -49,7 +113,7 @@
                         echo " active";
                     }
                     ?>">
-                        <input type="checkbox" name="valoisuus[]" value="2"
+                        <input type="radio" name="valoisuus" value="3"
                         <?php
                         if (isset($data->valoisuus) && ($data->valoisuus <= 4 && $data->valoisuus != 1)) {
                             echo " checked";
@@ -63,7 +127,7 @@
                         echo " active";
                     }
                     ?>">
-                        <input type="checkbox" name="valoisuus[]" value="3"
+                        <input type="radio" name="valoisuus" value="5"
                         <?php
                         if (isset($data->valoisuus) && ($data->valoisuus >= 4 || $data->valoisuus == 0)) {
                             echo " checked";
@@ -98,7 +162,7 @@
                         echo " active";
                     }
                     ?>">
-                        <input type="radio" name="vyohyke" value="2"  id="option7"
+                        <input type="radio" name="vyohyke" value="2" 
                         <?php
                         if (isset($data->vyohyke) && ($data->vyohyke == 2)) {
                             echo " checked";
@@ -111,7 +175,7 @@
                         echo " active";
                     }
                     ?>">
-                        <input type="radio" name="vyohyke" value="3"  id="option8"
+                        <input type="radio" name="vyohyke" value="3" 
                         <?php
                         if (isset($data->vyohyke) && ($data->vyohyke == 3)) {
                             echo " checked";
@@ -123,7 +187,7 @@
                                    echo " active";
                                }
                         ?>">
-                        <input type="radio" name="vyohyke" value="4"  id="option8"
+                        <input type="radio" name="vyohyke" value="4" 
                         <?php
                         if (isset($data->vyohyke) && ($data->vyohyke == 4)) {
                             echo " checked";
@@ -135,7 +199,7 @@
                                    echo " active";
                                }
                         ?>">
-                        <input type="radio" name="vyohyke" value="5"  id="option8" 
+                        <input type="radio" name="vyohyke" value="5" 
                         <?php
                         if (isset($data->vyohyke) && ($data->vyohyke == 5)) {
                             echo " checked";
@@ -147,7 +211,7 @@
                                    echo " active";
                                }
                         ?>">
-                        <input type="radio" name="vyohyke" value="6"  id="option8"
+                        <input type="radio" name="vyohyke" value="6" 
                         <?php
                         if (isset($data->vyohyke) && ($data->vyohyke == 6)) {
                             echo " checked";
@@ -159,7 +223,7 @@
                                    echo " active";
                                }
                         ?>">
-                        <input type="radio" name="vyohyke" value="7"  id="option8"
+                        <input type="radio" name="vyohyke" value="7" 
                         <?php
                         if (isset($data->vyohyke) && ($data->vyohyke == 7)) {
                             echo " checked";
@@ -171,7 +235,7 @@
                                    echo " active";
                                }
                         ?>">
-                        <input type="radio" name="vyohyke" value="8"  id="option8"
+                        <input type="radio" name="vyohyke" value="8" 
                         <?php
                         if (isset($data->vyohyke) && ($data->vyohyke == 8)) {
                             echo " checked";
@@ -183,7 +247,7 @@
                                    echo " active";
                                }
                         ?>">
-                        <input type="radio" name="vyohyke" value="9"  id="option8"
+                        <input type="radio" name="vyohyke" value="9"
                         <?php
                         if (isset($data->vyohyke) && ($data->vyohyke == 9)) {
                             echo " checked";
@@ -195,40 +259,37 @@
 
             </div>
             <div class="form-group">
-
                 <label class="col-sm-2 form-label">Tunnelma:</label>
                 <div class="btn-toolbar" id="testi" data-toggle="buttons">
 
-
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="romanttinen" id="option7"> Romanttinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="japanilainen" id="option7"> Japanilainen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="luonnollinen" id="option8"> Luonnollinen
-                    </label>
-
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="graafinen" id="option8"> Graafinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="kivikkoinen" id="option8"> Kivikkoinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="tunnelma" id="option8"> Hyötypuutarha
-                    </label>
+                    <?php foreach ($data->tunnelmat as $tunnelma): ?> 
+                        <label class="btn btn-primary
+                        <?php
+                        if (isset($data->tunnelma) && ($data->tunnelma == $tunnelma->getTunnelmaID())) {
+                            echo " active";
+                        }
+                        ?>">
+                            <input type="radio" name="tunnelma" value="<?php echo $tunnelma->getTunnelmaID() ?>"  <?php
+                           if (isset($data->tunnelma) && ($data->tunnelma == $tunnelma->getTunnelmaID())) {
+                               echo " checked";
+                           }
+                        ?>> <?php echo $tunnelma->getNimi() ?>
+                        </label>
+                    <?php endforeach; ?>
                 </div>
-
-
             </div>
             <div class="form-group">
-                <div class="col-md-offset-1 col-md-3">
-                    <button type="submit" name="id" value="<?php echo $data->id; ?>" id="muokkaa" class="btn btn-success btn-lg">Tallenna muutokset</button> </div>
-                <div class="col-md-1"> <button class="btn btn-danger" type="submit" name="poistaKasvi" value="<?php echo $data->id; ?>" data-toggle="modal" data-target="#confirmDelete" data-title="Poista" data-message="Haluatko varmasti poistaa?">
-                        <span class="glyphicon glyphicon-remove-circle" ></span>
-                    </button></div>
+                <div class="col-md-offset-2">
+                    <div class="btn-toolbar">
+                        <button type="submit" name="id" value="<?php echo $data->id; ?>" id="muokkaa" class="btn btn-success btn-lg">Tallenna muutokset</button> 
+                        <?php if ($data->tekija == $_SESSION["kirjautunut"] && $data->tyyppi == 1) { ?>
+                            <button class="btn btn-sm btn-danger" type="submit" name="poistaSuunnitelma" value="<?php echo $data->id; ?>" data-toggle="modal" data-target="#confirmDelete" data-title="Poista" data-message="Haluatko varmasti poistaa?">
+                                <span class="glyphicon glyphicon-remove-circle"></span> Poista
+                            </button>
+                        <?php } ?>
+
+                    </div>
+                </div>
             </div>
         </form>
     </div>

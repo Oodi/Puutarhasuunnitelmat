@@ -7,15 +7,17 @@ function startSession() {
 }
 
 
-function naytaNakyma($sivu, $data = array()) {
+function naytaNakyma($sivu, $data = array()) {   
     $sivu = $sivu;
+    $ots = '';
     $data = (object) $data;
     require 'views/template.php';
     exit();
 }
 
-function naytaNakymaNoExit($sivu, $data = array()) {
+function naytaNakymaAlaotsikko($sivu, $ots, $data = array()) {
     $sivu = $sivu;
+    $ots = $ots;
     $data = (object) $data;
     require 'views/template.php';
 }
@@ -28,7 +30,7 @@ function userOnly() {
     if (isset($_SESSION['kirjautunut']) && $_SESSION['ryhma'] >= 0) {
             return true;  
     } else {
-        ohjaaSivulle('login');
+        return false;
     }
 }
 
@@ -50,9 +52,33 @@ function tarkastaOikeudet() {
     }
 }
 
+function getAktiivinenSuunnitelma() {
+    if (isset($_SESSION['aktiivinenSuunnitelma'])) {
+        return aktiivinenSuunnitelma;
+    } else {
+        return null;
+    }
+}
+
 
 function siistiString($s) {
     return htmlspecialchars(trim($s));
+}
+
+
+function vaihdaAktiivistaSuunnitelmaa($suunnitelmaID) {
+    $deaktivoitava = Suunnitelma::haeAktiivinenSuunnitelma($_SESSION['kirjautunut']);
+        if (isset($deaktivoitava)) {
+            $deaktivoitava->aktivoiTaiDeaktivoiSuunnitelma(0);
+        }
+        if (isset($suunnitelmaID)) {
+        $aktivoitava = Suunnitelma::haeSuunnitelmaByID($suunnitelmaID);
+        $aktivoitava->aktivoiTaiDeaktivoiSuunnitelma(1);
+        $aktiivinenSuunnitelma = Suunnitelma::haeAktiivinenSuunnitelma($_SESSION['kirjautunut']);
+        if (isset($aktiivinenSuunnitelma)) {
+            $_SESSION['aktiivinenSuunnitelma'] = $aktiivinenSuunnitelma;
+        }
+        }
 }
 
 

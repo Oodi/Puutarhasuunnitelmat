@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once '../libs/common.php';
 require_once '../libs/tietokantayhteys.php';
@@ -16,12 +16,17 @@ if (isset($_GET["name"])) {
     if ($muokattava == null) {
         naytaNakyma('userList', array('virhe' => "Käyttäjää ei ole olemassa"));
     } else {
-        $muokattava->poistaKannasta();
-        $_SESSION['ilmoitus'] = "Käyttäjä poistettu onnistuneesti.";
-        ohjaaSivulle('../userlist');
+        if ($_SESSION['kirjautunut'] == $_GET["name"]) {
+            $_SESSION['ilmoitus'] = "Et voi poistaa itseäsi.";
+            ohjaaSivulle('../userlist');
+        } else {
+            $muokattava->poistaKannasta();
+            $_SESSION['ilmoitus'] = "Käyttäjä poistettu onnistuneesti.";
+            ohjaaSivulle('../userlist');
+        }
     }
+} else {
+    ohjaaSivulle('../userlist');
+}
 
     
-} else {
-    naytaNakyma('userList');
-}

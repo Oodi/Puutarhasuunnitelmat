@@ -8,6 +8,8 @@ if (tarkastaOikeudet() < 1) {
     ohjaaSivulle('index');
 }
 
+include_once 'class/delPlant.php';
+
 if (isset($_POST["id"])) {
     $id = $_POST["id"];
     $nimi = siistiString($_POST["nimi"]);
@@ -37,7 +39,6 @@ if (isset($_POST["id"])) {
         naytaNakyma('newPlant', array('virhe' => "Päivitys ei onnistunut"));
     }
 
-    ohjaaSivulle('plantlist');
 }
 
 

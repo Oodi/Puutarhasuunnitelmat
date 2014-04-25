@@ -13,7 +13,7 @@ class Kasvi {
     private $kasvuaika;
     private $kategoria;
 
-    public function __construct($nimi, $kuvaus, $valoisuus, $kasvuvyohyke, $kasvukorkeus, $kukinta_alkaa, $kukinta_paattyy, $kasvuaika) {
+    public function __construct($nimi, $kuvaus, $valoisuus, $kasvuvyohyke, $kasvukorkeus, $kukinta_alkaa, $kukinta_paattyy, $kasvuaika, $kategoria) {
 
         $this->nimi = $nimi;
         $this->kuvaus = $kuvaus;
@@ -23,16 +23,15 @@ class Kasvi {
         $this->kukinta_alkaa = $kukinta_alkaa;
         $this->kukinta_paattyy = $kukinta_paattyy;
         $this->kasvuaika = $kasvuaika;
-        //  $this->kategoria = $kategoria;
+        $this->kategoria = $kategoria;
     }
 
-
-
-    public static function haeKasvit($sivua) {
-        $montako = 10;
+    public static function haeKasvit($sivua, $nimi) {
+        $montako = 5;
         $testi = ($sivua - 1) * $montako;
-        $sql = "SELECT * FROM Kasvi ORDER by nimi LIMIT :monta OFFSET :apu ";
+        $sql = "SELECT * FROM Kasvi where nimi like :nimi ORDER by nimi LIMIT :monta OFFSET :apu ";
         $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->bindParam(':nimi', $nimi);
         $kysely->bindParam(':monta', $montako, PDO::PARAM_INT);
         $kysely->bindParam(':apu', $testi, PDO::PARAM_INT);
         $kysely->execute();
@@ -41,7 +40,7 @@ class Kasvi {
         $tulokset = array();
         foreach ($kysely->fetchAll(PDO::FETCH_OBJ) as $tulos) {
             $kasvi = new Kasvi($tulos->nimi, $tulos->kuvaus, $tulos->valoisuus, $tulos->kasvuvyohyke,
-                            $tulos->kasvukorkeus, $tulos->kukinta_alkaa, $tulos->kukinta_paattyy, $tulos->kasvuaika);
+                            $tulos->kasvukorkeus, $tulos->kukinta_alkaa, $tulos->kukinta_paattyy, $tulos->kasvuaika, $tulos->kategoria);
             $kasvi->setKasviID($tulos->kasviID);
             $tulokset[] = $kasvi;
         }
@@ -59,15 +58,31 @@ class Kasvi {
             return null;
         } else {
             $kasvi = new Kasvi($tulos->nimi, $tulos->kuvaus, $tulos->valoisuus, $tulos->kasvuvyohyke,
-                            $tulos->kasvukorkeus, $tulos->kukinta_alkaa, $tulos->kukinta_paattyy, $tulos->kasvuaika);
+                            $tulos->kasvukorkeus, $tulos->kukinta_alkaa, $tulos->kukinta_paattyy, $tulos->kasvuaika, $tulos->kategoria);
             $kasvi->setKasviID($tulos->kasviID);
             return $kasvi;
         }
     }
 
+    public static function haeSuunnitelmanKasvit($sID) {
+        $sql = "SELECT * From Kasvi WHERE kasviID = (SELECT kasviID from Suunnitelmien_kasvit WHERE suunnitelmaID = :id)";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->bindParam(':id', $sID, PDO::PARAM_INT);
+        $kysely->execute();
+
+        $tulokset = array();
+        foreach ($kysely->fetchAll(PDO::FETCH_OBJ) as $tulos) {
+            $kasvi = new Kasvi($tulos->nimi, $tulos->kuvaus, $tulos->valoisuus, $tulos->kasvuvyohyke,
+                            $tulos->kasvukorkeus, $tulos->kukinta_alkaa, $tulos->kukinta_paattyy, $tulos->kasvuaika, $tulos->kategoria);
+            $kasvi->setKasviID($tulos->kasviID);
+            $tulokset[] = $kasvi;
+        }
+        return $tulokset;
+    }
+
     public function kasvuVyohyke($numero) {
         $kirjaimet = array('Ia', 'Ib', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII');
-        if ($numero ==0 ){
+        if ($numero == 0) {
             $numero = 1;
         }
         if ($numero == 1) {
@@ -124,13 +139,12 @@ class Kasvi {
         }
         return $ok;
     }
-    
-        public function poistaKannasta() {
+
+    public function poistaKannasta() {
         $sql = "DELETE FROM Kasvi where kasviID = ?";
         $kysely = getTietokantayhteys()->prepare($sql);
-         $kysely->execute(array($this->getID()));    
+        $kysely->execute(array($this->getID()));
     }
-    
 
     public static function getValoisuusArvo($array) {
         $a = false;
@@ -158,8 +172,8 @@ class Kasvi {
             return 5;
         }
     }
-    
-        public function getID() {
+
+    public function getID() {
         return $this->kasviID;
     }
 

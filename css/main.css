@@ -51,9 +51,11 @@ body {
 
 #testi .btn{ 
     margin-bottom: 8px;
+     margin-left: 0px;
 }
 
 .form-signin .btn {
    margin-bottom: 8px;
+  
 }
 

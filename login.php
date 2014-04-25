@@ -3,6 +3,7 @@
 require_once 'libs/common.php';
 require_once 'libs/tietokantayhteys.php';
 require_once 'libs/models/kayttaja.php';
+require_once 'libs/models/suunnitelma.php';
 
 if (!visitorOnly()) {
     ohjaaSivulle('index');
@@ -21,6 +22,12 @@ if ($kayttaja != null) {
     $ryhma = $kayttaja->getAdmin();
     $_SESSION['kirjautunut'] = $nimi;
     $_SESSION['ryhma'] = $ryhma;
+    
+    $aktiivinenSuunnitelma = Suunnitelma::haeAktiivinenSuunnitelma($nimi);
+    
+    if (isset($aktiivinenSuunnitelma)) {
+        $_SESSION['aktiivinenSuunnitelma'] = $aktiivinenSuunnitelma->getID();
+    }
     
     ohjaaSivulle('index');
 } else {

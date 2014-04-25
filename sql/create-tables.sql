@@ -4,7 +4,6 @@ nimimerkki varchar(20) NOT NULL,
 salasana varchar(255) NOT NULL,
 sposti varchar(100),
 admin int(5) NOT NULL DEFAULT 0,
-salt varchar(255),
 PRIMARY key (nimimerkki)
 );
 
@@ -93,8 +92,10 @@ FOREIGN key (kasviID) REFERENCES Kasvi(kasviID) ON DELETE CASCADE
 CREATE TABLE Suunnitelma_muistio
 (
 nimimerkki varchar(20) NOT NULL,
+aktiivinensuunnitelma int,
 suunnitelmaID int NOT NULL,
 PRIMARY key (nimimerkki,suunnitelmaID),
 FOREIGN key (nimimerkki) REFERENCES Kayttaja(nimimerkki) ON DELETE CASCADE,
-FOREIGN key (suunnitelmaID) REFERENCES Suunnitelma(suunnitelmaID) ON DELETE CASCADE
+FOREIGN key (suunnitelmaID) REFERENCES Suunnitelma(suunnitelmaID) ON DELETE CASCADE,
+FOREIGN key (aktiivinensuunnitelma) REFERENCES Suunnitelma(suunnitelmaID) ON DELETE CASCADE
 );

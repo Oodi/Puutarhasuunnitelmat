@@ -1,34 +1,35 @@
+<form class="form-horizontal" method="GET">
+    <div class="form-group">
+    <button class="btn btn-success btn-sm" type="submit">Hae</button>
+    <div class="col-sm-3">
+    <input class="form-control" type="text" name="nimi" placeholder="Kasvin nimi">
+    </div>
+    </div>
+</form>
 
-<table class="table table-bordered">
+<table class="table table-condensed">
     <thead>
         <tr>
-            <th>Nimi</th>
-            <th>Kasvyvyöhyke</th>
-            <th>Kasvukorkeys</th>
-            <?php if (tarkastaOikeudet() >= 1): ?> 
-            <th></th>
-            <?php endif; ?>
-            
+            <th>Kasvit</th>
         </tr>
     </thead>
-    <tbody>
-        <?php foreach ($data as $kasvi): ?> 
-            <tr>
-                <td><?php echo $kasvi->getNimi(); ?></td>
-                <td><?php echo $kasvi->getKasvuvyohyke(); ?></td>
-                <td><?php echo $kasvi->getKasvukorkeus() . ' cm'; ?></td>   
-                 <?php if (tarkastaOikeudet() >= 1): ?>   
-                <td>
-                    <button onClick="location.href=<?php echo "'" . "editPlant.php?id=" . $kasvi->getID() . "'"; ?>" id="top" data-original-title="Tooltip on left" type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="left" title="Muokkaa"> 
-                        <span class="glyphicon glyphicon-pencil" ></span>
-                    </button>
-                    <button onClick="location.href=<?php echo "'" . "deletePlant.php?id=" . $kasvi->getID() . "'"; ?>" id="top" data-original-title="Tooltip on left" type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="left" title="Poista"> 
-                        <span class="glyphicon glyphicon-remove-circle" ></span>
-                    </button>
-                </td>
-                 <?php endif; ?>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
 </table>
+<ul class="pager">
+    <li class="previous"><a href="plantlist.php?sivu=<?php echo $data->nSivu - 1 ?>">Edellinen</a></li>
+    <li class="next"><a href="plantlist.php?sivu=<?php echo $data->nSivu + 1 ?>">Seuraava</a></li>
+</ul>
 
+<?php
+if (isset($data->kasvit)) {
+    foreach ($data->kasvit as $kasvi) {
+        include 'plantRow.php';
+    }
+}
+?>
+
+
+
+<ul class="pager">
+    <li class="previous"><a href="plantlist.php?sivu=<?php echo $data->nSivu - 1 ?>">Edellinen</a></li>
+    <li class="next"><a href="plantlist.php?sivu=<?php echo $data->nSivu + 1 ?>">Seuraava</a></li>
+</ul>

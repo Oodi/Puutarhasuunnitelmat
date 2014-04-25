@@ -40,5 +40,5 @@ if ($uusiKasvi->onkoKasviNimelta($nimi)) {
     naytaNakyma('newPlant', array('virhe'=>"Tämän niminen kasvi on jo tietokannassa"));
 }
 
-naytaNakyma('mainpage');
+ohjaaSivulle('plantlist');
 

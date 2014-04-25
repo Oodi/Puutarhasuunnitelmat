@@ -22,15 +22,15 @@
                 <?php if (visitorOnly()): ?>    
                 <li><a href="login.php">Kirjaudu sisään</a></li>
                 <?php endif; ?>
-                <?php if ((tarkastaOikeudet() >= 0)): ?>                    
+                <?php if ((tarkastaOikeudet() >= 0)): ?>    
+                <li><a href="myPlans.php">Omat suunnitelmat</a></li>
                 <li class="dropdown">                  
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hallinta <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Omat suunnitelmat</a></li>
                         <li><a href="#">Omat tiedot</a></li>
                         <li class="divider"></li>
                         <?php if (tarkastaOikeudet() >= 1): ?>   
-                        <li><a href="#">Hyväksy suunnitelmia</a></li>
+                        <li><a href="suggestedPlans.php">Hyväksy suunnitelmia</a></li>
                         <li><a href="userlist.php">Käyttäjät</a></li>
                         <li><a href="newPlant.php">Lisää kasvi</a></li>                      
                         <li class="divider"></li>

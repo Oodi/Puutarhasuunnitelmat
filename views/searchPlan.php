@@ -1,6 +1,11 @@
+<ul class="nav nav-tabs" >
+    <li class="active"><a href="#" >Hae suunnitelma</a></li>
+    <li><a href="planList.php">Selaile suunnitelmia</a></li>
+</ul>
+<br>
 <div class="panel panel-default">
     <div class="panel-body">
-        <form class="form-horizontal" method="post">
+        <form class="form-horizontal" method="get">
             <div class="form-group">
 
                 <label class="col-sm-2 form-label">Tila:</label>
@@ -83,19 +88,6 @@
                     </label>
                     <label class="btn btn-primary
                     <?php
-                    if (isset($data->valoisuus) && ($data->valoisuus == 2)) {
-                        echo " active";
-                    }
-                    ?>">
-                        <input type="radio" name="valoisuus" value="2"
-                        <?php
-                        if (isset($data->valoisuus) && ($data->valoisuus == 2)) {
-                            echo " checked";
-                        }
-                        ?>> Puolivarjo
-                    </label>
-                    <label class="btn btn-primary
-                    <?php
                     if (isset($data->valoisuus) && ($data->valoisuus == 3)) {
                         echo " active";
                     }
@@ -103,6 +95,19 @@
                         <input type="radio" name="valoisuus" value="3"
                         <?php
                         if (isset($data->valoisuus) && ($data->valoisuus == 3)) {
+                            echo " checked";
+                        }
+                        ?>> Puolivarjo
+                    </label>
+                    <label class="btn btn-primary
+                    <?php
+                    if (isset($data->valoisuus) && ($data->valoisuus == 5)) {
+                        echo " active";
+                    }
+                    ?>">
+                        <input type="radio" name="valoisuus" value="5"
+                        <?php
+                        if (isset($data->valoisuus) && ($data->valoisuus == 5)) {
                             echo " checked";
                         }
                         ?>> Varjo
@@ -234,90 +239,26 @@
                 </div>
 
             </div>
-            <div class="form-group">
 
+            <div class="form-group">
                 <label class="col-sm-2 form-label">Tunnelma:</label>
                 <div class="btn-toolbar" id="testi" data-toggle="buttons">
-                    <label class="btn btn-primary
-                    <?php
-                    if (isset($data->tunnelma) && ($data->tunnelma == "romanttinen")) {
-                        echo " active";
-                    }
-                    ?>">
-                        <input type="radio" name="tunnelma" value="romanttinen" 
-                        <?php
-                        if (isset($data->tunnelma) && ($data->tunnelma == "romanttinen")) {
-                            echo " checked";
-                        }
-                        ?>> Romanttinen
-                    </label>
-                    <label class="btn btn-primary
-                    <?php
-                    if (isset($data->tunnelma) && ($data->tunnelma == "japanilainen")) {
-                        echo " active";
-                    }
-                    ?>">
-                        <input type="radio" name="tunnelma" value="japanilainen"
-                        <?php
-                        if (isset($data->tunnelma) && ($data->tunnelma == "japanilainen")) {
-                            echo " checked";
-                        }
-                        ?>> Japanilainen
-                    </label>
-                    <label class="btn btn-primary
-                    <?php
-                    if (isset($data->tunnelma) && ($data->tunnelma == "luonnollinen")) {
-                        echo " active";
-                    }
-                    ?>">
-                        <input type="radio" name="tunnelma" value="luonnollinen"
-                        <?php
-                        if (isset($data->tunnelma) && ($data->tunnelma == "luonnollinen")) {
-                            echo " checked";
-                        }
-                        ?>> Luonnollinen
-                    </label>
-                    <label class="btn btn-primary
-                    <?php
-                    if (isset($data->tunnelma) && ($data->tunnelma == "graafinen")) {
-                        echo " active";
-                    }
-                    ?>">
-                        <input type="radio" name="tunnelma" value="graafinen"
-                        <?php
-                        if (isset($data->tunnelma) && ($data->tunnelma == "graafinen")) {
-                            echo " checked";
-                        }
-                        ?>> Graafinen
-                    </label>
-                    <label class="btn btn-primary
-                    <?php
-                    if (isset($data->tunnelma) && ($data->tunnelma == "kivikkoinen")) {
-                        echo " active";
-                    }
-                    ?>">
-                        <input type="radio" name="tunnelma" value="kivikkoinen"
-                        <?php
-                        if (isset($data->tunnelma) && ($data->tunnelma == "kivikkoinen")) {
-                            echo " checked";
-                        }
-                        ?>> Kivikkoinen
-                    </label>
-                    <label class="btn btn-primary
-                    <?php
-                    if (isset($data->tunnelma) && ($data->tunnelma == "hyoty")) {
-                        echo " active";
-                    }
-                    ?>">
-                        <input type="radio" name="tunnelma" value="hyoty"
-                        <?php
-                        if (isset($data->tunnelma) && ($data->tunnelma == "hyoty")) {
-                            echo " checked";
-                        }
-                        ?>> Hyötypuutarha
-                    </label>
-                </div>
 
+                    <?php foreach ($data->tunnelmat as $tunnelma): ?> 
+                        <label class="btn btn-primary
+                        <?php
+                        if (isset($data->tunnelma) && ($data->tunnelma == $tunnelma->getTunnelmaID())) {
+                            echo " active";
+                        }
+                        ?>">
+                            <input type="radio" name="tunnelma" value="<?php echo $tunnelma->getTunnelmaID() ?>"  <?php
+                           if (isset($data->tunnelma) && ($data->tunnelma == "romanttinen")) {
+                               echo " checked";
+                           }
+                        ?>> <?php echo $tunnelma->getNimi() ?>
+                        </label>
+                    <?php endforeach; ?>
+                </div>
             </div>
             <div class="form-group">
                 <div class="col-md-3 col-md-offset-1"><button name="haku" value="1" type="submit" id="hae" class="btn btn-success btn-lg">Hae suunnitelma</button> </div>
@@ -331,6 +272,8 @@
 <?php
 if (isset($data->suunnitelma)) {
     $suunitelmadata = $data->suunnitelma;
-    include 'plan.php';
+    include 'views/plan.php';
 }
 ?>
+
+
