@@ -6,6 +6,4 @@ require_once 'libs/common.php';
 
 
 
-//var_dump($_SESSION['ryhma']);
-//var_dump(visitorOnly());
 

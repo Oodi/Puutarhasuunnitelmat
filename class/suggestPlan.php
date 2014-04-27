@@ -8,6 +8,7 @@ if (isset($_POST["ehdotaJulkaisua"])) {
     
     if ($verrattava->getID() == $muutettava->getID()) {
         $muutettava->aktivoiTaiDeaktivoiSuunnitelma(0);
+        unset($_SESSION["aktiivinenSuunnitelma"]);
     }
     
     $_SESSION["ilmoitus"] = "Suunnitelma lähetetty tarkastettavaksi.";

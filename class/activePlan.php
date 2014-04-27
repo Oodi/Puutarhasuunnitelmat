@@ -1,5 +1,6 @@
 <?php
 
+/* Aktivoi halutun suunnitelman */
 if (userOnly()) {
     if (isset($_POST["aktivoiSuunnitelma"])) {
         $deaktivoitava = Suunnitelma::haeAktiivinenSuunnitelma($_SESSION['kirjautunut']);

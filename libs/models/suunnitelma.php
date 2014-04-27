@@ -14,7 +14,6 @@ class Suunnitelma {
     private $tekija;
 
     public function __construct($nimi, $kuvaus, $tila, $tkoko, $valoisuus, $kasvuvyohyke, $tunnelma, $styyppi, $tekija) {
-
         $this->nimi = $nimi;
         $this->kuvaus = $kuvaus;
         $this->tila = $tila;
@@ -26,10 +25,8 @@ class Suunnitelma {
         $this->tekija = $tekija;
     }
 
-    public function setSuunnitelmaID($id) {
-        $this->suunnitelmaID = $id;
-    }
-
+    /* Hakee hakuehtoa vastaavat suunnitelmat */
+    
     public static function haeVastaavatSuunnitelmat($tila, $tkoko, $valoisuus, $vyohyke, $tunnelma) {
         $sql = "SELECT suunnitelmaID FROM Suunnitelma, Tunnelma 
             WHERE tila = :tila AND tilan_koko = :tkoko AND valoisuus = :valoisuus AND kasvuvyohyke = :vyohyke 
@@ -49,6 +46,8 @@ class Suunnitelma {
         }
         return $tulokset;
     }
+    
+    /* Hakee ID:tä vastaavan suunnitelman */
 
     public static function haeSuunnitelmaByID($id) {
         $sql = "SELECT suunnitelmaID, nimi, kuvaus, tila, tilan_koko, valoisuus, kasvuvyohyke, suunnitelmatyyppi, tunnelma, tekija 
@@ -67,6 +66,8 @@ class Suunnitelma {
             return $suunnitelma;
         }
     }
+    
+    /* Hakee tietyn tyyppiset suunnitelmat */
 
     public static function haeTyypinMukaanSuunnitelmat($tyyppi) {
         $sql = "select * from Suunnitelma where suunnitelmatyyppi = :tyyppi";
@@ -83,6 +84,8 @@ class Suunnitelma {
         }
         return $tulokset;
     }
+    
+    /* Hakee tietyn käyttäjän suunnitelmat */
 
     public static function haeKayttajanSuunnitelmat($nimimerkki, $tyyppi) {
         $sql = "select *  from Suunnitelma, Suunnitelma_muistio where Suunnitelma_muistio.suunnitelmaID = Suunnitelma.suunnitelmaID
@@ -91,8 +94,6 @@ class Suunnitelma {
         $kysely->bindParam(':nimi', $nimimerkki);
         $kysely->bindParam(':tyyppi', $tyyppi);
         $kysely->execute();
-
-
 
         $tulokset = array();
         foreach ($kysely->fetchAll(PDO::FETCH_OBJ) as $tulos) {
@@ -103,6 +104,8 @@ class Suunnitelma {
         }
         return $tulokset;
     }
+    
+    /* Hakee tietyn käyttäjän aktiivisen suunnitelman */
 
     public static function haeAktiivinenSuunnitelma($nimimerkki) {
         $sql = "SELECT * FROM Suunnitelma WHERE suunnitelmaID = 
@@ -122,6 +125,8 @@ class Suunnitelma {
         }
     }
 
+    /* Lisää suunnitelman tietokantaan */
+    
     public function lisaaKantaan() {
         $sql = "INSERT INTO Suunnitelma(nimi, kuvaus, tila, tilan_koko, valoisuus, kasvuvyohyke, suunnitelmatyyppi, tunnelma, tekija) VALUES(?,?,?,?,?,?,?
             , ?,
@@ -131,6 +136,8 @@ class Suunnitelma {
             $this->getValoisuus(), $this->getKasvuvyohyke(), $this->getSuunnitelmaTyyppi(), $this->getTunnelma(), $this->getTekija()));
         $this->setSuunnitelmaID(getTietokantayhteys()->lastInsertId("suunnitelmaID"));
     }
+    
+    /* Päivittää tietyn suunnitelman tiedot */
 
     public function paivitaKantaan() {
         $sql = "UPDATE Suunnitelma SET nimi = ?, kuvaus = ?, tila = ?, tilan_koko = ?, valoisuus = ?, kasvuvyohyke = ?, tunnelma = ? where suunnitelmaID = ?";
@@ -139,17 +146,23 @@ class Suunnitelma {
             $this->getKasvuvyohyke(), $this->getTunnelma(), $this->getID()));
     }
 
+    /* Poistaa tietyn suunnitelman kannasta */
+    
     public function poistaKannasta() {
         $sql = "DELETE FROM Suunnitelma where suunnitelmaID = ?";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute(array($this->getID()));
     }
+    
+    /* Lisää suunnitelman tekijänsä muistioon */
 
     public function lisaaMuistioon() {
         $sql = "insert into Suunnitelma_muistio(nimimerkki,suunnitelmaID) values ((SELECT nimimerkki from Kayttaja where nimimerkki = ?), ?)";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute(array($this->getTekija(), $this->getID()));
     }
+    
+    /* Muuttaa suunnitelman tyyppiä 1 = yksityinen 2= hyväksymistä odottava, 3 = hylätty ja 4 = julkaistu */
 
     public function muutaSuunnitelmaTyyppia($arvo) {
         $sql = "UPDATE Suunnitelma set suunnitelmatyyppi = :arvo where suunnitelmaID = :ID";
@@ -159,6 +172,8 @@ class Suunnitelma {
         $kysely->execute();
     }
 
+    /* Aktivoi kyseisen suunnitelman aktiiviseksi */
+    
     public function aktivoiTaiDeaktivoiSuunnitelma($arvo) {
         $sql = "UPDATE Suunnitelma_muistio set aktiivinensuunnitelma = :arvo where suunnitelmaID = :ID AND nimimerkki = :nimi";
         $kysely = getTietokantayhteys()->prepare($sql);
@@ -167,6 +182,8 @@ class Suunnitelma {
         $kysely->bindParam(':nimi', $this->tekija);
         $kysely->execute();
     }
+    
+    /* Lisää kasvin kyseiseen suunnitelmaan */
 
     public function lisaaKasviSuunnitelmaan($kasvinID) {
         $asql1 = "(SELECT suunnitelmaID from Suunnitelma where suunnitelmaID = ?)";
@@ -175,6 +192,8 @@ class Suunnitelma {
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute(array($kasvinID, $this->suunnitelmaID));
     }
+    
+    /* Tarkastaa onko kasvi jo suunnitelmassa */
 
     public function onkoKasviSuunnitelmassa($kasvinID) {
         $sql = "SELECT * FROM Suunnitelmien_kasvit where kasviID = ? AND suunnitelmaID = ?";
@@ -187,6 +206,8 @@ class Suunnitelma {
             return true;
         }
     }
+    
+    /* Poistaa kasvin suunnitelmasta */
 
     public function poistaKasviSuunnitelmasta($kasvinID) {
         $sql = "DELETE FROM Suunnitelmien_kasvit where kasviID = ? AND suunnitelmaID = ?";
@@ -206,8 +227,24 @@ class Suunnitelma {
         return $this->tila;
     }
 
+    public function getTilaTekstina() {
+        if ($this->tila == 1) {
+            return "Parveke";
+        } elseif ($this->tila == 2) {
+            return "Piha";
+        }
+    }
+
     public function getTilanKoko() {
         return $this->tilanKoko;
+    }
+
+    public function getTilanKokoTekstina() {
+        if ($this->tilanKoko == 1) {
+            return "Pieni";
+        } elseif ($this->tilanKoko == 3) {
+            return "Iso";
+        }
     }
 
     public function getTunnelma() {
@@ -231,11 +268,15 @@ class Suunnitelma {
     }
 
     public function getTekija() {
-        return $this->tekija;
+        if ($this->tekija == null) {
+            return "Poistettu käyttäjä";
+        } else {
+            return $this->tekija;
+        }
     }
 
     public function setNimi($nimi) {
-         $this->nimi = $nimi;
+        $this->nimi = $nimi;
     }
 
     public function setTila() {
@@ -255,7 +296,7 @@ class Suunnitelma {
     }
 
     public function setSuunnitelmaTyyppi($tyyppi) {
-       $this->suunnitelmaTyyppi = $tyyppi;
+        $this->suunnitelmaTyyppi = $tyyppi;
     }
 
     public function setValoisuus() {
@@ -268,6 +309,10 @@ class Suunnitelma {
 
     public function setTekija($tekija) {
         $this->tekija = $tekija;
+    }
+
+    public function setSuunnitelmaID($id) {
+        $this->suunnitelmaID = $id;
     }
 
 }

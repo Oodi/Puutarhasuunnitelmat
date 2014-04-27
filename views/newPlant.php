@@ -70,24 +70,12 @@
 
                 <label class="col-sm-2 form-label">Tunnelma:</label>
                 <div class="btn-toolbar" id="testi" data-toggle="buttons">
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="romanttinen" id="option7"> Romanttinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="japanilainen" id="option7"> Japanilainen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="luonnollinen" id="option8"> Luonnollinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="graafinen" id="option8"> Graafinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="kivikkoinen" id="option8"> Kivikkoinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="hyoty" id="option8"> Hyötypuutarha
-                    </label>
+                    <?php foreach ($data->tunnelmat as $tunnelma): ?> 
+                    
+                        <label class="btn btn-primary">
+                            <input type="checkbox" name="tunnelma[]" value="<?php echo $tunnelma->getTunnelmaID() ?>"> <?php  echo $tunnelma->getNimi() ?>
+                        </label>
+                    <?php endforeach; ?>
                 </div>
 
 

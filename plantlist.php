@@ -7,6 +7,7 @@ require_once "libs/models/suunnitelma.php";
 
 
 include_once 'class/addPlantToPlan.php';
+include_once 'class/delPlantFromPlan.php';
 
 $sivu='plantlist';
 

@@ -19,7 +19,7 @@
             </div>
 
             <hr>
-
+            <?php if(visitorOnly()) {?>
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Rekisteröidy käyttäjäksi</h3>
@@ -33,3 +33,4 @@
                     </div>
                 </div>
             </div>
+            <?php }?>

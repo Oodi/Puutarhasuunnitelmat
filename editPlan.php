@@ -5,12 +5,15 @@ require_once 'libs/tietokantayhteys.php';
 require_once "libs/models/suunnitelma.php";
 require_once "libs/models/tunnelma.php";
 
+/* Tarkistetaan, että käyttäjä on kirjautunut */
 if (!userOnly()) {
     ohjaaSivulle('index');
 }
 
+/* Haetaan sivulla näytettävät tunnelmat */
 $tunnelmat = Tunnelma::haeTunnelmat();
 
+/* Tarkastetaan onko halutut muutokset asetettu ja tallenetaan ne tietokantaan*/
 if (isset($_POST["id"])) {
     $id = $_POST["id"];
     $nimi = siistiString($_POST["nimi"]);
@@ -25,26 +28,21 @@ if (isset($_POST["id"])) {
                     $kasvuvyohyke, $tunnelma, 1, $_SESSION["kirjautunut"]);
     $paivitaSuunnitelma->setSuunnitelmaID($id);
     $paivitaSuunnitelma->paivitaKantaan();
-    $_SESSION['ilmoitus'] = "Suunnitelma päivitetty onnistuneesti.";
-
-
-    
+    $_SESSION['ilmoitus'] = "Suunnitelma päivitetty onnistuneesti.";   
 }
 
+/* Sisällytetään suunnitelman poistamisen tarkistus*/
 include_once 'class/delPlan.php';
 
-
+/* Haetaan haluttu suunnitelma näytettäväksi */
 if (isset($_GET["id"])) {
-
     $muokattava = Suunnitelma::haeSuunnitelmaByID($_GET["id"]);
-
     if ($muokattava == null) {
         naytaNakyma('planList', array('virhe' => "Suunnitelmaa ei ole olemassa"));
-    } elseif ($muokattava->getTekija() != $_SESSION["kirjautunut"] || $muokattava->getSuunnitelmaTyyppi() != 1 && tarkastaOikeudet() < 1) {
+    } elseif (($muokattava->getTekija() != $_SESSION["kirjautunut"] || $muokattava->getSuunnitelmaTyyppi() != 1) &&  tarkastaOikeudet() < 1) {
         naytaNakyma('planList', array('virhe' => "Et voi muokata kyseistä suunnitelmaa"));
     }
-
-
+    
     naytaNakyma('editPlan', array(
         'nimi' => $muokattava->getNimi(),
         'tila' => $muokattava->getTila(),

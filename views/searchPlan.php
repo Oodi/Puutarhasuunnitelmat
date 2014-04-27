@@ -252,7 +252,7 @@
                         }
                         ?>">
                             <input type="radio" name="tunnelma" value="<?php echo $tunnelma->getTunnelmaID() ?>"  <?php
-                           if (isset($data->tunnelma) && ($data->tunnelma == "romanttinen")) {
+                           if (isset($data->tunnelma) && ($data->tunnelma == $tunnelma->getTunnelmaID())) {
                                echo " checked";
                            }
                         ?>> <?php echo $tunnelma->getNimi() ?>

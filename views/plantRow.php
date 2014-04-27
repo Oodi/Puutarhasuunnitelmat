@@ -12,14 +12,17 @@
                     </div>
                     <div align="right" class="col-sm-2">
                         <form method="post">
-                            <?php if (userOnly()): ?> 
+                            <?php if (userOnly() && onkoAktiivistaSuunnitelmaa() && !onkoKasviAktiivisessaSuunnitelmassa($kasvi->getID())): ?> 
                                 <button class="btn btn-default btn-sm" type="submit" name="lisaaKasviSuunnitelmaan" value="<?php echo $kasvi->getID(); ?>" data-toggle="tooltip" title="Lisää aktiiviseen suunnitelmaan" ><span class=" glyphicon glyphicon-plus-sign" ></span></button>
                             <?php endif; ?>
-                                <?php if (tarkastaOikeudet() >= 1): ?>
-                            <button onClick="location.href=<?php echo "'" . "editPlant.php?id=" . $kasvi->getID() . "'"; ?>" id="top" data-original-title="Tooltip on left" type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="left" title="Muokkaa"> 
-                                <span class="glyphicon glyphicon-pencil" ></span>
-                            </button>
-                                <?php endif; ?>
+                            <?php if (userOnly() && onkoAktiivistaSuunnitelmaa() &&  onkoKasviAktiivisessaSuunnitelmassa($kasvi->getID())): ?> 
+                                <button class="btn btn-default btn-sm" type="submit" name="poistaKasviSuunnitelmasta" value="<?php echo $kasvi->getID(); ?>" data-toggle="tooltip" title="Poista aktiivisesta suunnitelmasta" ><span class=" glyphicon glyphicon-minus-sign" ></span></button>
+                            <?php endif; ?>
+                            <?php if (tarkastaOikeudet() >= 1): ?>
+                                <button onClick="location.href=<?php echo "'" . "editPlant.php?id=" . $kasvi->getID() . "'"; ?>" id="top" data-original-title="Tooltip on left" type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="left" title="Muokkaa"> 
+                                    <span class="glyphicon glyphicon-pencil" ></span>
+                                </button>
+                            <?php endif; ?>
                         </form>
                     </div>
                 </div>

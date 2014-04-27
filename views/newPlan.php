@@ -99,7 +99,7 @@
                     <?php foreach ($data->tunnelmat as $tunnelma): ?> 
                     
                         <label class="btn btn-primary">
-                            <input type="radio" name="tunnelma" value="<?php echo $tunnelma->getTunnelmaID() ?>" id="option7"> <?php  echo $tunnelma->getNimi() ?>
+                            <input type="radio" name="tunnelma" value="<?php echo $tunnelma->getTunnelmaID() ?>"> <?php  echo $tunnelma->getNimi() ?>
                         </label>
                     <?php endforeach; ?>
                 </div>

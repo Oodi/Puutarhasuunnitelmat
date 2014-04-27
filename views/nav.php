@@ -14,16 +14,16 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="searchPlan.php">Suunnitelmat</a></li>
-                <li><a href="plantlist.php">Kasvit</a></li>
+                <li <?php if ("searchPlan" == $_SESSION["nakyma"]) echo 'class="active"'; ?>><a href="searchPlan.php">Suunnitelmat</a></li>
+                <li <?php if ("plantlist" == $_SESSION["nakyma"]) echo 'class="active"'; ?>><a href="plantlist.php">Kasvit</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 <?php if (visitorOnly()): ?>    
-                <li><a href="login.php">Kirjaudu sisään</a></li>
+                <li <?php if ("login" == $_SESSION["nakyma"]) echo 'class="active"'; ?>><a href="login.php">Kirjaudu sisään</a></li>
                 <?php endif; ?>
                 <?php if ((tarkastaOikeudet() >= 0)): ?>    
-                <li><a href="myPlans.php">Omat suunnitelmat</a></li>
+                <li <?php if ("myPlans" == $_SESSION["nakyma"]) echo 'class="active"'; ?>><a href="myPlans.php">Omat suunnitelmat</a></li>
                 <li class="dropdown">                  
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hallinta <b class="caret"></b></a>
                     <ul class="dropdown-menu">

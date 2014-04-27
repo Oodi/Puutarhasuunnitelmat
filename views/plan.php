@@ -11,8 +11,7 @@
         <?php if (tarkastaOikeudet() >= 0) { ?>
             <form method="post">
                 <?php
-                if ($suun->getTekija() == $_SESSION["kirjautunut"] && $suun->getSuunnitelmaTyyppi() < 2
-                        || tarkastaOikeudet() >= 1) {
+                if (tarkastaOikeudet() >= 1 || ($suun->getTekija() == $_SESSION["kirjautunut"] && $suun->getSuunnitelmaTyyppi() < 2)) {
                     ?>
                     <a href="editPlan.php?id=<?php echo $suun->getID(); ?>" class="btn btn-primary btn-sm">Muokkaa suunnitelmaa</a>  
                 <?php } ?>

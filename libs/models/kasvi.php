@@ -12,6 +12,9 @@ class Kasvi {
     private $kukinta_paattyy;
     private $kasvuaika;
     private $kategoria;
+    private $tunnelmat;
+
+    /* Kasvin kontruktori */
 
     public function __construct($nimi, $kuvaus, $valoisuus, $kasvuvyohyke, $kasvukorkeus, $kukinta_alkaa, $kukinta_paattyy, $kasvuaika, $kategoria) {
 
@@ -25,6 +28,8 @@ class Kasvi {
         $this->kasvuaika = $kasvuaika;
         $this->kategoria = $kategoria;
     }
+
+    /* Hakee viisi kasvia kerrallaan nimen avulla filtteröiden */
 
     public static function haeKasvit($sivua, $nimi) {
         $montako = 5;
@@ -42,10 +47,13 @@ class Kasvi {
             $kasvi = new Kasvi($tulos->nimi, $tulos->kuvaus, $tulos->valoisuus, $tulos->kasvuvyohyke,
                             $tulos->kasvukorkeus, $tulos->kukinta_alkaa, $tulos->kukinta_paattyy, $tulos->kasvuaika, $tulos->kategoria);
             $kasvi->setKasviID($tulos->kasviID);
+            $kasvi->setTunnelmat($kasvi->haeTunnelmat());
             $tulokset[] = $kasvi;
         }
         return $tulokset;
     }
+
+    /* Hakee yhden kasvin ID:seen perustuen */
 
     public static function haeKasviByID($id) {
         $sql = "SELECT * FROM Kasvi WHERE kasviID = :id LIMIT 1";
@@ -60,12 +68,15 @@ class Kasvi {
             $kasvi = new Kasvi($tulos->nimi, $tulos->kuvaus, $tulos->valoisuus, $tulos->kasvuvyohyke,
                             $tulos->kasvukorkeus, $tulos->kukinta_alkaa, $tulos->kukinta_paattyy, $tulos->kasvuaika, $tulos->kategoria);
             $kasvi->setKasviID($tulos->kasviID);
+            $kasvi->setTunnelmat($kasvi->haeTunnelmat());
             return $kasvi;
         }
     }
 
+    /* Hakee kaikki tiettyyn suunnitelmaan liittyvät kasvit */
+    
     public static function haeSuunnitelmanKasvit($sID) {
-        $sql = "SELECT * From Kasvi WHERE kasviID = (SELECT kasviID from Suunnitelmien_kasvit WHERE suunnitelmaID = :id)";
+        $sql = "SELECT * From Kasvi, Suunnitelmien_kasvit  WHERE Kasvi.kasviID = Suunnitelmien_kasvit.kasviID AND suunnitelmaID = :id";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->bindParam(':id', $sID, PDO::PARAM_INT);
         $kysely->execute();
@@ -75,10 +86,109 @@ class Kasvi {
             $kasvi = new Kasvi($tulos->nimi, $tulos->kuvaus, $tulos->valoisuus, $tulos->kasvuvyohyke,
                             $tulos->kasvukorkeus, $tulos->kukinta_alkaa, $tulos->kukinta_paattyy, $tulos->kasvuaika, $tulos->kategoria);
             $kasvi->setKasviID($tulos->kasviID);
+            $kasvi->setTunnelmat($kasvi->haeTunnelmat());
             $tulokset[] = $kasvi;
         }
         return $tulokset;
     }
+    
+     /* Laskee kasvien lukumäärän */
+    public static function lukumaara() {
+        $sql = "SELECT count(*) FROM kasvit";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute();
+        return $kysely->fetchColumn();
+    }
+    
+     /* Tarkistaa löytyyö kyseisellä nimellä olevaa kasvia */
+    public static function onkoKasviNimelta($nimi) {
+        $sql = "SELECT count(*) from Kasvi where nimi = ? ";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute(array($nimi));
+        if ($kysely->fetchColumn() != 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+     /* Lisää uuden kasvin tietokantaan */
+
+    public function lisaaKantaan() {
+        $sql = "INSERT INTO Kasvi(nimi, kuvaus, valoisuus, kasvuvyohyke, kasvukorkeus) VALUES(?,?,?,?,?)";
+        $kysely = getTietokantayhteys()->prepare($sql);
+
+        $ok = $kysely->execute(array($this->getNimi(), $this->getKuvaus(), $this->getValoisuus(), $this->getKasvuvyohykeNum(), $this->getKasvukorkeus()));
+        $this->setKasviID(getTietokantayhteys()->lastInsertId("kasviID"));
+        return $ok;
+    }
+    
+     /* Päivittää tietyn kasvin tiedot tietokantaan */
+
+    public function paivitaKantaan() {
+        $sql = "UPDATE Kasvi SET nimi = ?, kuvaus = ?, valoisuus = ?, kasvuvyohyke = ?, kasvukorkeus = ? where kasviID = ?";
+        $kysely = getTietokantayhteys()->prepare($sql);
+
+        $ok = $kysely->execute(array($this->getNimi(), $this->getKuvaus(), $this->getValoisuus(), $this->getKasvuvyohykeNum(), $this->getKasvukorkeus(), $this->getID()));
+        if ($ok) {
+            
+        }
+        return $ok;
+    }
+    
+    /* Poistaa tietyn kasvin tietokannasta*/
+
+    public function poistaKannasta() {
+        $sql = "DELETE FROM Kasvi where kasviID = ?";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute(array($this->getID()));
+    }
+    
+    /* Lisää tai poistaa kasvia vastaamaan tunnelman */
+
+    public function lisaaTaiPoistaTunnelma($tunnelmaID, $lisaa) {
+        if (!$this->onkoTunnelma($tunnelmaID) && $lisaa) {
+            $sql = "INSERT INTO Kasvien_tunnelmat(tunnelmaID, kasviID) VALUES(?,?)";
+            $kysely = getTietokantayhteys()->prepare($sql);
+            $kysely->execute(array($tunnelmaID, $this->getID()));
+        } else if ($this->onkoTunnelma($tunnelmaID) && !$lisaa) {
+            $sql = "DELETE FROM Kasvien_tunnelmat where tunnelmaID = ? AND kasviID = ?";
+            $kysely = getTietokantayhteys()->prepare($sql);
+            $kysely->execute(array($tunnelmaID, $this->getID()));
+        }
+    }
+    
+    /* Tarkistaa liittyykö kyseinen tunnelma jo kasviin */
+
+    public function onkoTunnelma($id) {
+        $sql = "SELECT count(*) from Kasvien_tunnelmat where tunnelmaID = :tid  AND kasviID = :id";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->bindParam(':id', $this->getID(), PDO::PARAM_INT);
+        $kysely->bindParam(':tid', $id, PDO::PARAM_INT);
+        $kysely->execute();
+        if ($kysely->fetchColumn() != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /* Hakee kaikki kasviin liittyvät tunnelmat */
+
+    public function haeTunnelmat() {
+        $sql = "SELECT tunnelmaID from Kasvien_tunnelmat where kasviID = :id";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->bindParam(':id', $this->getID(), PDO::PARAM_INT);
+        $kysely->execute();
+
+        $t = array();
+        foreach ($kysely->fetchAll(PDO::FETCH_OBJ) as $tulos) {
+            $t[] = $tulos->tunnelmaID;
+        }
+        return $t;
+    }
+    
+    /* Palauttaa halutun kasvuvyöhykkeen tekstinä */
 
     public function kasvuVyohyke($numero) {
         $kirjaimet = array('Ia', 'Ib', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII');
@@ -91,60 +201,20 @@ class Kasvi {
             return 'I-' . $kirjaimet[$numero - 1];
         }
     }
+    
+    /* Palauttaa kasvuvyöhykkeen tekstinä */
 
     public function getKasvuvyohyke() {
         return $this->kasvuVyohyke($this->kasvuvyohyke);
     }
+    
+    /* Palauttaa kasvuvyöhykkeen numerona */
 
     public function getKasvuvyohykeNum() {
         return $this->kasvuvyohyke;
     }
-
-    public static function lukumaara() {
-        $sql = "SELECT count(*) FROM kasvit";
-        $kysely = getTietokantayhteys()->prepare($sql);
-        $kysely->execute();
-        return $kysely->fetchColumn();
-    }
-
-    public static function onkoKasviNimelta($nimi) {
-        $sql = "SELECT count(*) from Kasvi where nimi = ? ";
-        $kysely = getTietokantayhteys()->prepare($sql);
-        $kysely->execute(array($nimi));
-        if ($kysely->fetchColumn() != 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function lisaaKantaan() {
-        $sql = "INSERT INTO Kasvi(nimi, kuvaus, valoisuus, kasvuvyohyke, kasvukorkeus) VALUES(?,?,?,?,?)";
-        $kysely = getTietokantayhteys()->prepare($sql);
-
-        $ok = $kysely->execute(array($this->getNimi(), $this->getKuvaus(), $this->getValoisuus(), $this->getKasvuvyohykeNum(), $this->getKasvukorkeus()));
-        if ($ok) {
-            
-        }
-        return $ok;
-    }
-
-    public function paivitaKantaan() {
-        $sql = "UPDATE Kasvi SET nimi = ?, kuvaus = ?, valoisuus = ?, kasvuvyohyke = ?, kasvukorkeus = ? where kasviID = ?";
-        $kysely = getTietokantayhteys()->prepare($sql);
-
-        $ok = $kysely->execute(array($this->getNimi(), $this->getKuvaus(), $this->getValoisuus(), $this->getKasvuvyohykeNum(), $this->getKasvukorkeus(), $this->getID()));
-        if ($ok) {
-            
-        }
-        return $ok;
-    }
-
-    public function poistaKannasta() {
-        $sql = "DELETE FROM Kasvi where kasviID = ?";
-        $kysely = getTietokantayhteys()->prepare($sql);
-        $kysely->execute(array($this->getID()));
-    }
+    
+    /* Muodostaa valintojen perusteella valoisuus arvon 0-5 */
 
     public static function getValoisuusArvo($array) {
         $a = false;
@@ -193,8 +263,16 @@ class Kasvi {
         return $this->kasvukorkeus;
     }
 
+    public function getTunnelmat() {
+        return $this->tunnelmat;
+    }
+
     public function setKasviID($id) {
         $this->kasviID = $id;
+    }
+
+    public function setTunnelmat($tunnelmat) {
+        $this->tunnelmat = $tunnelmat;
     }
 
 }

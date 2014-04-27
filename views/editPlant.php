@@ -198,35 +198,26 @@
 
                 <label class="col-sm-2 form-label">Tunnelma:</label>
                 <div class="btn-toolbar" id="testi" data-toggle="buttons">
-
-
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="romanttinen" id="option7"> Romanttinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="japanilainen" id="option7"> Japanilainen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="luonnollinen" id="option8"> Luonnollinen
-                    </label>
-
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="graafinen" id="option8"> Graafinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="kivikkoinen" id="option8"> Kivikkoinen
-                    </label>
-                    <label class="btn btn-primary">
-                        <input type="checkbox" name="tunnelma[]" value="tunnelma" id="option8"> Hyötypuutarha
-                    </label>
-                </div>
-
-
+                    
+                     <?php foreach ($data->tunnelmat as $tunnelma): ?> 
+                        <label class="btn btn-primary
+                        <?php
+                        if (isset($data->tunnelma) && in_array($tunnelma->getTunnelmaID(),$data->tunnelma)) {
+                            echo " active";
+                        }
+                        ?>">                         
+                            <input type="checkbox" name="tunnelma[]" value="<?php echo $tunnelma->getTunnelmaID() ?>"  <?php
+                           if (isset($data->tunnelma) && in_array($tunnelma->getTunnelmaID(),$data->tunnelma)) {
+                               echo " checked";
+                           }
+                        ?>> <?php echo $tunnelma->getNimi() ?>
+                        </label>
+                    <?php endforeach; ?>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-1 col-md-3">
                     <button type="submit" name="id" value="<?php echo $data->id; ?>" id="muokkaa" class="btn btn-success btn-lg">Tallenna muutokset</button> </div>
-                <div class="col-md-1"> <button class="btn btn-danger" type="submit" name="poistaKasvi" value="<?php echo $data->id; ?>" data-toggle="modal" data-target="#confirmDelete" data-title="Poista" data-message="Haluatko varmasti poistaa?">
+                <div class="col-md-1"> <button class="btn btn-danger" type="submit" name="poistaKasvi" value="<?php echo $data->id; ?>" data-title="Poista" data-message="Haluatko varmasti poistaa?">
                         <span class="glyphicon glyphicon-remove-circle" ></span>
                     </button></div>
             </div>

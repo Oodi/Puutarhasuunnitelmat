@@ -7,8 +7,10 @@
     <thead>
         <tr>
             <th>Suunnitelmat</th>
+            <th>Tila</th>
+            <th>Tilan koko</th>
+            <th>Tunnelma</th>
             <th>Tekijä</th>
-
         </tr>
     </thead>
 
@@ -23,6 +25,9 @@
         <?php foreach ($data->suunnitelmat as $suunnitelma): ?> 
             <tr>
                 <td><a href="plan.php?id=<?php echo $suunnitelma->getID(); ?>"><?php echo $suunnitelma->getNimi(); ?></a></td>
+                <td><?php echo $suunnitelma->getTilaTekstina();?> </td>
+                <td><?php echo $suunnitelma->getTilanKokoTekstina();?> </td>
+                <td><?php echo Tunnelma::haeTunnelmaByID($suunnitelma->getTunnelma())->getNimi();?> </td>
                 <td><?php echo $suunnitelma->getTekija();?> </td>
             </tr>
         <?php endforeach; ?>

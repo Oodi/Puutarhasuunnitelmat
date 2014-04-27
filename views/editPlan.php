@@ -282,7 +282,7 @@
                 <div class="col-md-offset-2">
                     <div class="btn-toolbar">
                         <button type="submit" name="id" value="<?php echo $data->id; ?>" id="muokkaa" class="btn btn-success btn-lg">Tallenna muutokset</button> 
-                        <?php if ($data->tekija == $_SESSION["kirjautunut"] && $data->tyyppi == 1) { ?>
+                        <?php if (tarkastaOikeudet() >= 1 || ($data->tekija == $_SESSION["kirjautunut"] && $data->tyyppi == 1)) { ?>
                             <button class="btn btn-sm btn-danger" type="submit" name="poistaSuunnitelma" value="<?php echo $data->id; ?>" data-toggle="modal" data-target="#confirmDelete" data-title="Poista" data-message="Haluatko varmasti poistaa?">
                                 <span class="glyphicon glyphicon-remove-circle"></span> Poista
                             </button>

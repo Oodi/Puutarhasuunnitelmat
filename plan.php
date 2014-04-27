@@ -12,6 +12,8 @@ if (!isset($_GET['id'])) {
 
 include_once  'class/activePlan.php';
 include_once  'class/acceptOrDenyPlan.php';
+include_once 'class/addPlantToPlan.php';
+include_once 'class/delPlantFromPlan.php';
 
 $suun = Suunnitelma::haeSuunnitelmaByID($_GET['id']);
 if (!isset($suun)) {

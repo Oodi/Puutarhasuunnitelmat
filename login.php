@@ -5,10 +5,12 @@ require_once 'libs/tietokantayhteys.php';
 require_once 'libs/models/kayttaja.php';
 require_once 'libs/models/suunnitelma.php';
 
+/* Tarkistetaan, että käyttäjä ei ole jo kirjautunut */
 if (!visitorOnly()) {
     ohjaaSivulle('index');
 }
 
+/* Näytetään kirjautuminen jos tietoja ei ole jo täytetty */
 if (empty($_POST["username"]) or empty($_POST["password"])) {
     naytaNakyma("login");
 }
@@ -16,6 +18,7 @@ if (empty($_POST["username"]) or empty($_POST["password"])) {
 $nimimerkki = $_POST["username"];
 $salasana = $_POST["password"];
 
+/* Etsitään löytyykö tietoja vastaavaa käyttäjää ja kirjataan käyttäjä sisään, jos tiedot täsmää */
 $kayttaja = Kayttaja::etsiKayttajaTunnuksilla($nimimerkki, $salasana);
 if ($kayttaja != null) {
     $nimi = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $kayttaja->getNimimerkki());
@@ -29,7 +32,7 @@ if ($kayttaja != null) {
         $_SESSION['aktiivinenSuunnitelma'] = $aktiivinenSuunnitelma->getID();
     }
     
-    ohjaaSivulle('index');
+    ohjaaSivulle('myPlans');
 } else {
     naytaNakyma("login", array(
         'kayttaja' => $nimimerkki,
